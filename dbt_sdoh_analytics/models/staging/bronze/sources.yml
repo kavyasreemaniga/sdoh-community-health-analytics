@@ -1,0 +1,92 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Raw data layer - ingested from CSV files"
+    database: sdoh_analytics
+    schema: bronze
+    
+    tables:
+      - name: patients
+        description: "Synthea synthetic patient demographics and clinical data"
+        columns:
+          - name: patient_id
+            description: "Unique patient identifier"
+            data_tests:
+              - unique
+              - not_null
+          
+          - name: race
+            description: "Patient race (White, Black, Asian, Native, Other)"
+          
+          - name: ethnicity
+            description: "Patient ethnicity (Hispanic, Non-Hispanic)"
+          
+          - name: zip
+            description: "Patient ZIP code for geographic analysis"
+          
+          - name: ingestion_timestamp
+            description: "When this record was loaded into the database"
+      
+      - name: sdoh_screenings
+        description: "PRAPARE framework SDOH screenings with risk scoring"
+        columns:
+          - name: screening_id
+            description: "Unique screening identifier"
+            data_tests:
+              - unique
+              - not_null
+          
+          - name: patient_id
+            description: "Foreign key to patients table"
+            data_tests:
+              - not_null
+              - relationships:
+                  to: source('bronze', 'patients')
+                  field: patient_id
+          
+          - name: screening_date
+            description: "Date screening was conducted"
+            data_tests:
+              - not_null
+          
+          - name: sdoh_risk_score
+            description: "Composite SDOH risk score (0-10)"
+          
+          - name: risk_category
+            description: "Risk level: Low Risk, Moderate Risk, High Risk"
+            data_tests:
+              - accepted_values:
+                  values: ['Low Risk', 'Moderate Risk', 'High Risk']
+      
+      - name: community_referrals
+        description: "Community service referrals and intervention tracking"
+        columns:
+          - name: referral_id
+            description: "Unique referral identifier"
+            data_tests:
+              - unique
+              - not_null
+          
+          - name: patient_id
+            description: "Foreign key to patients table"
+            data_tests:
+              - relationships:
+                  to: source('bronze', 'patients')
+                  field: patient_id
+          
+          - name: screening_id
+            description: "Foreign key to sdoh_screenings table"
+            data_tests:
+              - relationships:
+                  to: source('bronze', 'sdoh_screenings')
+                  field: screening_id
+          
+          - name: referral_status
+            description: "Status: Completed, Pending, Declined, Unable to Contact"
+            data_tests:
+              - accepted_values:
+                  values: ['Completed', 'Pending', 'Declined', 'Unable to Contact']
+          
+          - name: service_type
+            description: "Type of community service (Food, Housing, etc.)"

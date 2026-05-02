@@ -1,0 +1,41 @@
+# Environment variables (NEVER commit credentials)
+.env
+*.env
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Data files (too large for GitHub)
+data/raw/
+data/processed/
+data/tableau_exports/
+
+# Synthea tool (too large)
+tools/
+
+# dbt
+dbt_sdoh_analytics/target/
+dbt_sdoh_analytics/dbt_packages/
+dbt_sdoh_analytics/logs/
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
