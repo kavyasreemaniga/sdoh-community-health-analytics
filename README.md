@@ -13,6 +13,26 @@ This platform integrates synthetic clinical data (Epic FHIR via Synthea), SDOH s
 ---
 
 ## 🏗️ Architecture
+
+┌─────────────────────────────────────────────────────┐
+│  Phase 1: Data Generation                           │
+│  Synthea FHIR → Python Scripts → CSV Files          │
+└─────────────────────────┬───────────────────────────┘
+│
+┌─────────────────────────▼───────────────────────────┐
+│  Phase 2: Database & Ingestion                      │
+│  Python Pipeline → PostgreSQL (Bronze Schema)       │
+└─────────────────────────┬───────────────────────────┘
+│
+┌─────────────────────────▼───────────────────────────┐
+│  Phase 3: dbt Transformations                       │
+│  Bronze → Staging (Silver) → Marts (Gold)           │
+└─────────────────────────┬───────────────────────────┘
+│
+┌─────────────────────────▼───────────────────────────┐
+│  Phase 4: Dashboards                                │
+│  Tableau Public - 3 Interactive Dashboards          │
+└─────────────────────────────────────────────────────┘
 ---
 
 ## 🛠️ Tech Stack
@@ -57,6 +77,47 @@ This platform integrates synthetic clinical data (Epic FHIR via Synthea), SDOH s
 ---
 
 ## 📁 Project Structure
+
+sdoh-community-health-analytics/
+├── src/
+│   ├── data_generation/
+│   │   ├── generate_sdoh_screenings.py    # PRAPARE screening generator
+│   │   └── generate_community_referrals.py # Referral data generator
+│   ├── database/
+│   │   ├── create_schemas.sql             # Bronze/Staging/Marts schema
+│   │   └── fix_schema.sql                 # Schema updates
+│   ├── ingestion/
+│   │   ├── load_patients.py               # Patient data loader
+│   │   ├── load_sdoh_screenings.py        # Screening data loader
+│   │   ├── load_community_referrals.py    # Referral data loader
+│   │   └── load_all_data.py               # Master load script
+│   └── utils/
+│       └── db_connection.py               # Database connection utility
+├── dbt_sdoh_analytics/
+│   ├── models/
+│   │   ├── staging/
+│   │   │   └── bronze/
+│   │   │       ├── sources.yml            # Bronze source definitions
+│   │   │       ├── stg_patients.sql       # Patient staging model
+│   │   │       ├── stg_sdoh_screenings.sql # Screening staging model
+│   │   │       └── stg_community_referrals.sql # Referral staging model
+│   │   └── marts/
+│   │       ├── core/
+│   │       │   └── fct_patient_sdoh_summary.sql  # Patient fact table
+│   │       └── program_performance/
+│   │           ├── rpt_program_performance.sql    # Program metrics
+│   │           └── rpt_health_equity_dashboard.sql # Equity metrics
+│   ├── macros/
+│   │   └── get_custom_schema.sql          # Custom schema macro
+│   ├── dbt_project.yml                    # dbt project config
+│   └── README.md                          # dbt documentation
+├── docs/
+│   └── DASHBOARDS.md                      # Dashboard documentation
+├── data/
+│   └── DATA_SUMMARY.md                    # Dataset documentation
+├── requirements.txt
+├── .gitignore
+└── README.md
 ---
 
 ## 🚀 Quick Start
@@ -71,7 +132,7 @@ This platform integrates synthetic clinical data (Epic FHIR via Synthea), SDOH s
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/kavyasreede/sdoh-community-health-analytics.git
+git clone https://github.com/kavyasreemaniga/sdoh-community-health-analytics.git
 cd sdoh-community-health-analytics
 ```
 
@@ -198,7 +259,7 @@ All dbt models include automated tests:
 - [x] Phase 1: Synthetic data generation (Synthea + PRAPARE)
 - [x] Phase 2: PostgreSQL database + Python ingestion pipeline
 - [x] Phase 3: dbt transformation layer (staging + marts)
-- [ ] Phase 4: Tableau Public dashboards (In Progress)
+- [ ] Phase 4: Tableau Public dashboards 
 - [ ] Phase 5: Apache Airflow orchestration
 - [ ] Phase 6: ML risk prediction model
 - [ ] Phase 7: CI/CD with GitHub Actions
@@ -210,7 +271,7 @@ All dbt models include automated tests:
 **Kavya Sree Maniga**
 - 📧 kavyasreede@gmail.com
 - 💼 [LinkedIn](https://linkedin.com/in/kavyasreede)
-- 🐙 [GitHub](https://github.com/kavyasreede)
+- 🐙 [GitHub](https://github.com/kavyasreemaniga)
 
 ---
 
