@@ -78,7 +78,7 @@ This platform integrates synthetic clinical data (Epic FHIR via Synthea), SDOH s
 ---
 
 ## 📁 Project Structure
-
+```
 sdoh-community-health-analytics/
 ├── src/
 │   ├── data_generation/
