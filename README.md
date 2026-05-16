@@ -16,23 +16,23 @@ This platform integrates synthetic clinical data (Epic FHIR via Synthea), SDOH s
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                 Phase 1: Data Generation             │
-│          Synthea FHIR → Python Scripts → CSV Files   │
+│                 Phase 1: Data Generation            │
+│          Synthea FHIR → Python Scripts → CSV Files  │
 └─────────────────────────┬───────────────────────────┘
                           │
 ┌─────────────────────────▼───────────────────────────┐
-│              Phase 2: Database & Ingestion           │
-│         Python Pipeline → PostgreSQL (Bronze)        │
+│              Phase 2: Database & Ingestion          │
+│         Python Pipeline → PostgreSQL (Bronze)       │
 └─────────────────────────┬───────────────────────────┘
                           │
 ┌─────────────────────────▼───────────────────────────┐
-│              Phase 3: dbt Transformations            │
-│           Bronze → Staging (Silver) → Marts (Gold)   │
+│              Phase 3: dbt Transformations           │
+│           Bronze → Staging (Silver) → Marts (Gold)  │
 └─────────────────────────┬───────────────────────────┘
                           │
 ┌─────────────────────────▼───────────────────────────┐
-│                  Phase 4: Dashboards                 │
-│          Tableau Public - 3 Interactive Dashboards   │
+│                  Phase 4: Dashboards                │
+│          Tableau Public - 3 Interactive Dashboards  │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -54,7 +54,7 @@ This platform integrates synthetic clinical data (Epic FHIR via Synthea), SDOH s
 
 | Dataset | Rows | Description |
 |---------|------|-------------|
-| Patients | 1,134 | Synthea FHIR synthetic patients (Colorado) |
+| Patients | 1,134 | Synthea FHIR synthetic patients  |
 | SDOH Screenings | 1,725 | PRAPARE framework screenings |
 | Community Referrals | 1,520 | Program interventions & outcomes |
 
@@ -120,9 +120,12 @@ sdoh-community-health-analytics/
 ├── .gitignore
 └── README.md
 ---
+````
 
 ## 🚀 Quick Start
+````
 
+---
 ### Prerequisites
 
 - Python 3.8+
