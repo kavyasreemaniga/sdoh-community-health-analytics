@@ -14,26 +14,27 @@ This platform integrates synthetic clinical data (Epic FHIR via Synthea), SDOH s
 
 ## 🏗️ Architecture
 
+```
 ┌─────────────────────────────────────────────────────┐
-│  Phase 1: Data Generation                           │
-│  Synthea FHIR → Python Scripts → CSV Files          │
+│                 Phase 1: Data Generation             │
+│          Synthea FHIR → Python Scripts → CSV Files   │
 └─────────────────────────┬───────────────────────────┘
-│
+                          │
 ┌─────────────────────────▼───────────────────────────┐
-│  Phase 2: Database & Ingestion                      │
-│  Python Pipeline → PostgreSQL (Bronze Schema)       │
+│              Phase 2: Database & Ingestion           │
+│         Python Pipeline → PostgreSQL (Bronze)        │
 └─────────────────────────┬───────────────────────────┘
-│
+                          │
 ┌─────────────────────────▼───────────────────────────┐
-│  Phase 3: dbt Transformations                       │
-│  Bronze → Staging (Silver) → Marts (Gold)           │
+│              Phase 3: dbt Transformations            │
+│           Bronze → Staging (Silver) → Marts (Gold)   │
 └─────────────────────────┬───────────────────────────┘
-│
+                          │
 ┌─────────────────────────▼───────────────────────────┐
-│  Phase 4: Dashboards                                │
-│  Tableau Public - 3 Interactive Dashboards          │
+│                  Phase 4: Dashboards                 │
+│          Tableau Public - 3 Interactive Dashboards   │
 └─────────────────────────────────────────────────────┘
----
+```
 
 ## 🛠️ Tech Stack
 
